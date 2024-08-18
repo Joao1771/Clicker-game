@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>teste</title>
+    <script>
+        document.addEventListener('click', (e) => {
+            document.querySelector('.p').innerText += e.target
+            console.log(e.target)
+        })
+    </script>
+</head>
+
+<body style="background:gray ; color: white;">
+    <button style="border:solid 1px white ; background-color: transparent; z-index: 3;">
+        <h1 style="z-index:-1;  color: white; position: relative;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla velit possimus officia magnam omnis
+            molestiae cupiditate, iusto ipsum quasi enim. Rerum impedit, porro eos magnam maxime fugiat dolorum qui ex?
+        </h1>
+        <h2 style="z-index:-1 ; ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, perspiciatis. Atque ducimus deserunt
+            maiores porro pariatur facere exercitationem, ad labore qui velit laborum, consectetur ex quo accusantium
+            officiis modi nobis.</h2>
+    </button>
+    <div><h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore sed dicta repellendus at beatae dignissimos mollitia, facere modi porro quam ducimus commodi sunt dolores aut quisquam doloremque minima! Voluptatum, non.</h1></div>
+    <p class="p" style="color:white ; font-size: 20px;" >sus</p>
+</body>
+
+</html>
