@@ -16,7 +16,7 @@ function escopo() {
     let firsttime = false
     let continuando = false
     let zero = 0
-    verify()
+    verify() // ve se eh a primeira vez e seta firsttime como true
     let builtlist = carga('builtlist')
     let musicaatual
     let [mora, upavel, preco] = [carga('mora'), true, 5];
@@ -32,15 +32,15 @@ function escopo() {
     tudodozero()
     numberedit('built')
     function tudodozero(){
-    if (firsttime) {
-        builtlist = [];
+    if (firsttime) {//se for primeira vez seta todos os valores para isso
+        builtlist = [];//builtlist eh o array que vai salvar todos os valores
         [mora, dano, upgrades, lvlallow, lvlallowed,clicks] = [0, 1, 1, 1, 1,0]
         aleat = false
         numberedit('vezes', '1')
         numberedit('total', '-2147483648')
         numberedit('mora', '0')
     }}
-    function savemanual() {
+    function savemanual() {//salvar variaveis no armazenamento local para salvar o progresso
         localStorage.setItem('dano', JSON.stringify(dano))
         localStorage.setItem('mora', JSON.stringify(mora))
         localStorage.setItem('upgrades', JSON.stringify(upgrades))
@@ -50,7 +50,7 @@ function escopo() {
         localStorage.setItem('aleat', JSON.stringify(aleat))
         localStorage.setItem('clicks', JSON.stringify(clicks))
     }
-    function cantAfford(elemento) {
+    function cantAfford(elemento) {//funcao para quando n for possivel comprar (mora < custo)
         const delay = 1000;
         if (upg.classList.contains('comprado')) return;
         elemento.classList.add('erro');
@@ -59,7 +59,7 @@ function escopo() {
         }, delay);
         return;
     };
-    function random(min, max) {
+    function random(min, max) {//funcao random padrao
         return Math.ceil(Math.random() * (max - min) + min)
     }
     function aparece(div, div2 = null) {
@@ -74,7 +74,7 @@ function escopo() {
         return JSON.parse(localStorage.getItem(itemid))
     }
     function numberedit(element, inner = '-2147483648') {
-        //função para colocar o innerHTML e innerText ao abrir o jogo 
+        //funcao para colocar o innerHTML e innerText ao abrir o jogo 
         const total = qtd.querySelector('.total')
         if (element === 'total') total.innerText = inner + ' de dano'
         if (element === 'vezes') vezes.innerHTML = inner + 'x'
@@ -105,14 +105,17 @@ function escopo() {
     function espera(funcao, tempo = 10) {
         setTimeout(funcao, tempo)
     }
-    function jack(e) {
+    function jack(e) {//cheat
         if (e.key === 'j') {
+            todos = document.querySelectorAll('.preco')
             if (preco !== 0) {
                 preco = 0
-                todos = document.querySelectorAll('.preco')
                 for (cadatabela of todos) cadatabela.innerText = 0 + ' Mora'
             }
-            else preco = 5
+            else{
+                preco = 5
+                for (cadatabela of todos) cadatabela.innerText = 'troque a pag.'
+            }
         }
     }
     function convert(numero) {
@@ -135,7 +138,7 @@ function escopo() {
             if (!pagina1) upg.classList.add('desativado')
         }
     }
-    function inicio(vai) {
+    function inicio(vai) {//se carrega o menu ou nao
         if (vai) {
             menu.classList.add('desativado')
             document.querySelector('section').classList.remove('desativado')
@@ -145,10 +148,10 @@ function escopo() {
             document.querySelector('section').classList.add('desativado')
         }
     }
-    function mute(som) {
+    function mute(som) {//funcao para as musicas
         const sommenu = document.querySelector('.som-menu')
         if (som) {
-            sommenu.src = localStorage.getItem('musica') || "./assets/audio/Resonance HOME.mp3"
+            sommenu.src = localStorage.getItem('musica') || "./assets/audio/Feel-good.mp3"
         }
         else { sommenu.src = '#' }
     }
@@ -159,15 +162,15 @@ function escopo() {
             }
         }
     }
-    function setarmusica(botao = 0) {
-        if (botao === 1) return "./assets/audio/Resonance HOME.mp3"
-        if (botao === 2) return "./assets/audio/I Feel It Coming.mp3"
-        if (botao === 3) return "./assets/audio/Ritmadinha Magnífica.mp3"
-        if (botao === 4) return "./assets/audio/Ritmada Celestial.mp3"
-        if (botao === 5) return "./assets/audio/Une ile.mp3"
-        if (botao === 6) return "./assets/audio/Piloto.mp3"
-        if (botao === 7) return "./assets/audio/Out of Time.mp3"
-        if (botao === 8) return "./assets/audio/Glorious morning.mp3"
+    function setarmusica(botao = 0) {//pega os arquivos das musicas
+        if (botao === 1) return "./assets/audio/Feel-good.mp3"
+        if (botao === 2) return "./assets/audio/Why-we-lose.mp3"
+        if (botao === 3) return "./assets/audio/Symbolism.mp3"
+        if (botao === 4) return "./assets/audio/Faded.mp3"
+        if (botao === 5) return "./assets/audio/Une-ile.mp3"
+        if (botao === 6) return "./assets/audio/Heroes-tonight.mp3"
+        if (botao === 7) return "./assets/audio/On-e-on.mp3"
+        if (botao === 8) return "./assets/audio/Glorious-morning.mp3"
     }
     function aumenta() {
         let [m1, m2] = [2, 4];
@@ -188,11 +191,11 @@ function escopo() {
                     if (!aleat) aleat = random(2, 5)
                     let custo = Math.ceil((zero ** zero / 10) * m1 * preco * aleat)
                     if (zero >= 8) custo = Math.ceil((zero ** zero / 50) * m1 * preco * aleat)
-                    tantodebuttons.push(zero);
+                    tantodebuttons.push(zero);//varias linhas que poderiam estar em outro lugar...
                     upg.classList.add(`lvl${zero}`);
                     upg.querySelector('.preco').innerText = custo + ' Mora';
                     if (custo >= 10000) upg.querySelector('.preco').innerText = convert(custo) + ' Mora'
-                    if (e.target === upg) {
+                    if (e.target == upg || e.target == upg.children[0]) {
                         if (mora - custo < 0 || lvlallow < zero) {
                             upavel = false;
                             cantAfford(upg);
@@ -219,7 +222,7 @@ function escopo() {
                     upg.classList.add(`lvl${zero}`);
                     upg.querySelector('.preco').innerText = custo + ' Mora';
                     if (custo >= 10000) upg.querySelector('.preco').innerText = convert(custo) + ' Mora'
-                    if (e.target === upg) {
+                    if (e.target === upg || e.target == upg.children[0]) {
                         if (mora - custo < 0 || lvlallowed < zero) {
                             upavel = false;
                             cantAfford(upg);
@@ -312,37 +315,37 @@ function escopo() {
             h62.addEventListener('click', reseta)
         }}
          if (dano > 200000) {
-            img.src = 'https://i.ytimg.com/vi/CCdTu4FdfTQ/maxresdefault.jpg'
+            img.src = 'assets/img/dano200000.jpg'
             qtd.querySelector('.total').style = corpyro
             if (propriety === 'dmgcolor') return corpyro
         }
         else if (dano > 60000) {
-            img.src = 'https://upload-os-bbs.hoyolab.com/upload/2022/09/10/124817022/43f57df4182d9fdaca00c4e01e16613d_121478840972213191.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80'
+            img.src = 'assets/img/dano60000.webp'
             qtd.querySelector('.total').style = coranemo
             if (propriety === 'dmgcolor') return coranemo
         }
         else if (dano > 10000) {
-            img.src = 'https://fextralife.com/wp-content/uploads/2020/11/charged-attack-damage.jpg'
+            img.src = 'assets/img/dano10000.webp'
             qtd.querySelector('.total').style = corpyro
             if (propriety === 'dmgcolor') return corpyro
         }
         else if (dano > 4000) {
-            img.src = 'https://static.wikia.nocookie.net/gensin-impact/images/6/6a/Damage.png/revision/latest?cb=20230209045206'
+            img.src = 'assets/img/dano4000.webp'
             qtd.querySelector('.total').style = corhydro
             if (propriety === 'dmgcolor') return corhydro
         }
         else if (dano > 1000) {
-            img.src = '../clicker/assets/img/dano1000.png'
+            img.src = 'assets/img/dano1000.png'
             qtd.querySelector('.total').style = corhydro
             if (propriety === 'dmgcolor') return corhydro
         }
         else if (dano > 100) {
-            img.src = 'https://i.ytimg.com/vi/QcfH3ilLUBY/mqdefault.jpg'
+            img.src = 'assets/img/dano100.jpg'
             qtd.querySelector('.total').style = corfisico
             if (propriety === 'dmgcolor') return corfisico
         }
         else if (dano >= 1) {
-            img.src = '../clicker/assets/img/dano1.png'
+            img.src = 'assets/img/dano1.png'
             qtd.querySelector('.total').style = corgeo
             if (propriety === 'dmgcolor') return corgeo
         }
@@ -357,7 +360,7 @@ function escopo() {
             body.removeChild(section)
         }
     }
-    function dmgshow(dano) {
+    function dmgshow(dano) {//funcao para mostrar os danos na tela
         const div = document.createElement('div')
         dmgbox.appendChild(div).classList.add('dmg-effect')
         div.innerText = dano
@@ -370,10 +373,7 @@ function escopo() {
         espera(function () { dmgbox.querySelector('.dmg-effect').remove() }, 2000)
     }
 
-    function executar() {
-        aumenta()
-    }
-    executar()
+    aumenta()
 }
 setTimeout(escopo(), 10)
 //dentro das div: aumentar fonte, criar um scroll pras musicas, colocar um p
