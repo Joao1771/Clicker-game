@@ -346,13 +346,14 @@
    height: 100%;
    background: transparent;
    color: aliceblue;
+   max-width: 50vw;
  }
  .menu .playstyle{
    font-size: 3rem;
    cursor: pointer;
    width: 100%;
    height: 4rem;
-   margin-bottom: 10px;
+   margin: 10px 0px;
    text-align: center;
    display: flex;
    flex-direction: column;
@@ -382,10 +383,13 @@
  .menu .credit:hover::after{
    width: 13rem;
  }
+ .menu .reset:hover::after{
+   width: 14rem;
+ }
  .menu .menu-buttons{
    background: rgba(0, 0, 0, 0.575);
-   height: 20rem;
-   padding: 5px 0px;
+   height: fit-content;
+   padding: 10px 0px;
    box-shadow: -4px 0 20px  5px rgba(255, 255, 255, 0.527) inset;
    border-radius: 5px;
  }

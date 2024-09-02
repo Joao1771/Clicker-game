@@ -14,7 +14,7 @@ function escopo() {
     const p = document.createElement('p');
     qtd.appendChild(p).classList.add('total');
     let firsttime = false
-    let continuando = false
+    let continuando = carga('continuando')
     let zero = 0
     verify() // ve se eh a primeira vez e seta firsttime como true
     let builtlist = carga('builtlist')
@@ -31,11 +31,12 @@ function escopo() {
     load()
     tudodozero()
     numberedit('built')
-    function tudodozero(){
+    function tudodozero(){//se first time for true reseta tudo
     if (firsttime) {//se for primeira vez seta todos os valores para isso
         builtlist = [];//builtlist eh o array que vai salvar todos os valores
         [mora, dano, upgrades, lvlallow, lvlallowed,clicks] = [0, 1, 1, 1, 1,0]
         aleat = false
+        continuando = false
         numberedit('vezes', '1')
         numberedit('total', '-2147483648')
         numberedit('mora', '0')
@@ -49,6 +50,7 @@ function escopo() {
         localStorage.setItem('lvlallowed', JSON.stringify(lvlallowed))
         localStorage.setItem('aleat', JSON.stringify(aleat))
         localStorage.setItem('clicks', JSON.stringify(clicks))
+        localStorage.setItem('continuando', JSON.stringify(continuando))
     }
     function cantAfford(elemento) {//funcao para quando n for possivel comprar (mora < custo)
         const delay = 1000;
@@ -69,17 +71,20 @@ function escopo() {
         else { document.querySelector(div).classList.add('desativado') }
         if (div2) document.querySelector(div2).classList.add('desativado')
     }
-    function carga(itemid) {
+    function carga(itemid) {//pega o item salvo no localStorage
         //carga: carrega|retorna o item sem parse (analisar, parse é tirar do JSON e retornar ao original)
         return JSON.parse(localStorage.getItem(itemid))
     }
-    function numberedit(element, inner = '-2147483648') {
-        //funcao para colocar o innerHTML e innerText ao abrir o jogo 
+    function numberedit(element, inner = '-2147483648') {//funcao para colocar o innerHTML e innerText ao abrir o jogo 
         const total = qtd.querySelector('.total')
-        if (element === 'total') total.innerText = inner + ' de dano'
-        if (element === 'vezes') vezes.innerHTML = inner + 'x'
-        if (element === 'mora') morashow.innerText = inner
-        if (element === 'built') {
+        switch(element){
+            case 'total': total.innerText = inner + ' de dano'
+            break
+            case 'vezes': vezes.innerHTML = inner + 'x'
+            break
+            case 'mora': morashow.innerText = inner
+            break
+            case 'built': 
             for (upg of listabuttons) {
                 zero++
                 if (builtlist.includes(`${zero}p`)) upg.classList.add('comprado')
@@ -93,7 +98,7 @@ function escopo() {
             }
             zero = 0
         }
-    }
+        }
     function verify() {
         if (!carga('mora') || !carga('dano') || !carga('builtlist')) firsttime = true
     }
@@ -145,6 +150,7 @@ function escopo() {
         }
         if (!vai) {
             menu.classList.remove('desativado')
+            load()
             document.querySelector('section').classList.add('desativado')
         }
     }
@@ -300,8 +306,21 @@ function escopo() {
         const h61 = document.createElement('h6')
         const h62 = document.createElement('h6')
         const div = document.createElement('div')
+        const resetbtn = document.querySelector('.menu-buttons').children[3]
+        if(continuando){
+            resetbtn.classList.add('reset','playstyle')
+            resetbtn.innerHTML = 'Reiniciar'
+            var val
+            resetbtn.addEventListener('click',() => {
+                val = confirm('Tem certeza que deseja reiniciar todo o progresso?')
+                if(val){
+                    resetbtn.setAttribute('style','display:none')
+                    reseta()
+                    }
+            })
+        }
         if (dano > 262000 && upgrades === 9) {
-            if (body.childElementCount <= 6 &&!continuando){
+            if (body.childElementCount <= 7 && !continuando){
             body.appendChild(section).classList.add('parabens')
             body.querySelector('.parabens').innerText = 'Parabéns!'
             body.querySelector('.parabens').appendChild(div)
@@ -351,11 +370,13 @@ function escopo() {
         }
         function continua() {
             continuando = true
+            savemanual()
             body.removeChild(section)
         }
         function reseta() {
             firsttime = true
             tudodozero()
+            savemanual()
             numberedit('built')
             body.removeChild(section)
         }
@@ -376,10 +397,7 @@ function escopo() {
     aumenta()
 }
 setTimeout(escopo(), 10)
-//dentro das div: aumentar fonte, criar um scroll pras musicas, colocar um p
-//arrumar a div menu-buttons e deixar
-//a h1 menos espaçada no mobile, colocar as musicas
-
+//arrumar mobile
 
     // function load() {
     //     const upg1 = 'upg1.html'
