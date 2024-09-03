@@ -100,7 +100,7 @@ function escopo() {
         }
         }
     function verify() {
-        if (!carga('mora') || !carga('dano') || !carga('builtlist')) firsttime = true
+        if (!carga('dano') || !carga('builtlist')) firsttime = true
     }
     function comprado(item) {
         upg.classList.add('comprado');
@@ -214,6 +214,7 @@ function escopo() {
                         numberedit('mora', mora);
                         comprado('p')
                         load()
+                        savemanual()
                     };
                 };
                 zero = 0
@@ -241,6 +242,7 @@ function escopo() {
                         numberedit('mora', mora);
                         comprado('e');
                         load()
+                        savemanual()
                     };
                 };
                 zero = 0
@@ -252,7 +254,7 @@ function escopo() {
                 if (mora > 10000000000) return
                 upavel = true
                 clicks++
-                console.log(clicks)
+                console.log(clicks + ' clicks')
                 img.classList.add('efeito')
                 setTimeout(function () {
                     img.classList.remove('efeito')

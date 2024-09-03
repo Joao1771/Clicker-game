@@ -1,5 +1,5 @@
  * {
-     background: rgb(49, 49, 53);
+     background: rgb(62, 62, 65);
      box-sizing: border-box;
      padding: 0;
      margin: 0;
@@ -292,7 +292,7 @@
     justify-content: center;
     z-index: 5;
     font-size: 10rem;
-    background-color: rgba(88, 88, 88, 0.466);
+    background-color: rgba(82, 82, 82, 0.466);
     position: absolute;
     top: 0px;
     cursor: default;
@@ -336,7 +336,7 @@
    margin-bottom: 36vh;
  }
  .menu{
-   background:url(https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000000025/7137262b5a64d921e193653f8aa0b722925abc5680380ca0e18a5cfd91697f58);
+   background:url(/assets/img/background.png);
    background-size: cover;
    background-position: center center;
    background-repeat: no-repeat;
